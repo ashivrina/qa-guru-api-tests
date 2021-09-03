@@ -2,6 +2,7 @@ import io.restassured.http.ContentType;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.get;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -57,21 +58,6 @@ public class ReqresTests {
                 .body("error", is("Missing password"));
     }
 
-    //test for create user - use smth like that
-    /*
-    @Test
-    void checkTotal20WithAssertJ() {
-        Integer response =
-                get("https://selenoid.autotests.cloud/status")
-                        .then()
-                        .extract().path("total");
-
-        System.out.println(response);
-
-        assertThat(response).isEqualTo(20);
-    }
-     */
-
     @Test
     void createNewUser() {
         String expectedName = "Buffy";
@@ -85,5 +71,24 @@ public class ReqresTests {
                         .extract().path("name");
 
         assertThat(actualName).isEqualTo(expectedName);
+    }
+
+    @Test
+    void getExistingUser() {
+        given()
+                .contentType(ContentType.JSON)
+                .get("https://reqres.in/api/users/2")
+                .then()
+                .statusCode(200)
+                .body("data.email", is("janet.weaver@reqres.in"))
+                .body("data.first_name", is("Janet"))
+                .body("data.last_name", is("Weaver"));
+    }
+
+    @Test
+    void getNonexistingUser() {
+        get("https://reqres.in/api/users/23")
+                .then()
+                .statusCode(404);
     }
 }
