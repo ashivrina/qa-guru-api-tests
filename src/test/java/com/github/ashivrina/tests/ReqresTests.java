@@ -1,7 +1,10 @@
 package com.github.ashivrina.tests;
 
-import com.github.ashivrina.models.User;
-import com.github.ashivrina.models.UserData;
+import com.github.ashivrina.models.registration.RegistrationLoginRequest;
+import com.github.ashivrina.models.registration.RegistrationLoginResponse;
+import com.github.ashivrina.models.users.NewUser;
+import com.github.ashivrina.models.users.User;
+import com.github.ashivrina.models.users.UserData;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.Test;
 
@@ -13,15 +16,22 @@ import static org.hamcrest.Matchers.is;
 public class ReqresTests {
     @Test
     void checkSuccessfullLogin() {
-        given()
+        String expectedEmail = "eve.holt@reqres.in";
+        String password = "cityslicka";
+        RegistrationLoginRequest request = new RegistrationLoginRequest(expectedEmail, password);
+        RegistrationLoginResponse response = given()
                 .contentType(ContentType.JSON)
-                .body("{\"email\": \"eve.holt@reqres.in\"," +
-                        "\"password\": \"cityslicka\"}")
+                .body(request)
                 .when()
                 .post("https://reqres.in/api/login")
                 .then()
                 .statusCode(200)
-                .body("token", is("QpwL5tke4Pnpja7X4"));
+                .extract()
+                .as(RegistrationLoginResponse.class);
+        String token = "QpwL5tke4Pnpja7X4";
+        assertThat(response.getToken())
+                .as("Check that token is " + token)
+                .isEqualTo(token);
     }
 
     @Test
@@ -38,16 +48,26 @@ public class ReqresTests {
 
     @Test
     void checkSuccessfullRegistration() {
-        given()
+        String expectedEmail = "eve.holt@reqres.in";
+        String password = "pistol";
+        RegistrationLoginRequest request = new RegistrationLoginRequest(expectedEmail, password);
+        RegistrationLoginResponse response = given()
                 .contentType(ContentType.JSON)
-                .body("{\"email\": \"eve.holt@reqres.in\"," +
-                        "\"password\": \"pistol\"}")
+                .body(request)
                 .when()
-                .post("https://reqres.in/api/register")
+                    .post("https://reqres.in/api/register")
                 .then()
-                .statusCode(200)
-                .body("token", is("QpwL5tke4Pnpja7X4"))
-                .body("id", is(4));
+                    .statusCode(200)
+                    .extract()
+                    .as(RegistrationLoginResponse.class);
+        String token = "QpwL5tke4Pnpja7X4";
+        Integer id = 4;
+        assertThat(response.getToken())
+                .as("Check that token is " + token)
+                .isEqualTo(token);
+        assertThat(response.getId())
+                .as("Check that id is " + id)
+                .isEqualTo(id);
     }
 
     @Test
@@ -65,20 +85,29 @@ public class ReqresTests {
     @Test
     void createNewUser() {
         String expectedName = "Buffy";
-        String actualName = given()
-                        .contentType(ContentType.JSON)
-                        .body("{\"name\": \"" + expectedName + "\"," +
-                                "\"job\": \"vampire slayer\"}")
-                        .post("https://reqres.in/api/users")
-                        .then()
-                        .statusCode(201)
-                        .extract().path("name");
-
-        assertThat(actualName).isEqualTo(expectedName);
+        String expectedJob = "vampire slayer";
+        NewUser newUser = new NewUser(expectedName, expectedJob);
+        NewUser response = given()
+                                .contentType(ContentType.JSON)
+                                .body(newUser)
+                                .post("https://reqres.in/api/users")
+                            .then()
+                                .statusCode(201)
+                                .extract()
+                                .as(NewUser.class);
+        assertThat(response.getName())
+                .as("Check that name is " + expectedName)
+                .isEqualTo(expectedName);
+        assertThat(response.getJob())
+                .as("Check that job is " + expectedJob)
+                .isEqualTo(expectedJob);
+        assertThat(response.getId())
+                .as("Check that id is not negative")
+                .isNotNegative();
     }
 
     @Test
-    void testGetUserById() {
+    void getExistingUser() {
         String firstName = "Emma";
         String lastName = "Wong";
         String email = "emma.wong@reqres.in";
@@ -86,7 +115,7 @@ public class ReqresTests {
         UserData data = given()
                .when()
                     .get("https://reqres.in/api/users/{id}", 3)
-                .then()
+               .then()
                     .extract()
                     .as(UserData.class);
 
@@ -101,18 +130,6 @@ public class ReqresTests {
         assertThat(user.getEmail())
                 .as("Check email is " + email)
                 .isEqualTo(email);
-    }
-
-    @Test
-    void getExistingUser() {
-        given()
-                    .contentType(ContentType.JSON)
-                    .get("https://reqres.in/api/users/2")
-                    .then()
-                    .statusCode(200)
-                    .body("data.email", is("janet.weaver@reqres.in"))
-                    .body("data.first_name", is("Janet"))
-                    .body("data.last_name", is("Weaver"));
     }
 
     @Test

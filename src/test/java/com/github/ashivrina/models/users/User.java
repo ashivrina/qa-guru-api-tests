@@ -1,4 +1,4 @@
-package com.github.ashivrina.models;
+package com.github.ashivrina.models.users;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,6 +11,13 @@ public class User {
     private String firstName;
     @JsonProperty("last_name")
     private String lastName;
+
+    public User() {
+    }
+
+    public User(String email) {
+        this.email = email;
+    }
 
     public Integer getId() {
         return id;

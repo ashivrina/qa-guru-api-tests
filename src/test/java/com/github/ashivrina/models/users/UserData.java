@@ -1,4 +1,4 @@
-package com.github.ashivrina.models;
+package com.github.ashivrina.models.users;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
