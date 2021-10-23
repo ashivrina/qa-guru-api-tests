@@ -1,3 +1,7 @@
+package com.github.ashivrina.tests;
+
+import com.github.ashivrina.models.User;
+import com.github.ashivrina.models.UserData;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.Test;
 
@@ -74,15 +78,41 @@ public class ReqresTests {
     }
 
     @Test
+    void testGetUserById() {
+        String firstName = "Emma";
+        String lastName = "Wong";
+        String email = "emma.wong@reqres.in";
+
+        UserData data = given()
+               .when()
+                    .get("https://reqres.in/api/users/{id}", 3)
+                .then()
+                    .extract()
+                    .as(UserData.class);
+
+        User user = data.getData();
+
+        assertThat(user.getFirstName())
+                .as("Check first name is " + firstName)
+                .isEqualTo(firstName);
+        assertThat(user.getLastName())
+                .as("Check last name is " + lastName)
+                .isEqualTo(lastName);
+        assertThat(user.getEmail())
+                .as("Check email is " + email)
+                .isEqualTo(email);
+    }
+
+    @Test
     void getExistingUser() {
         given()
-                .contentType(ContentType.JSON)
-                .get("https://reqres.in/api/users/2")
-                .then()
-                .statusCode(200)
-                .body("data.email", is("janet.weaver@reqres.in"))
-                .body("data.first_name", is("Janet"))
-                .body("data.last_name", is("Weaver"));
+                    .contentType(ContentType.JSON)
+                    .get("https://reqres.in/api/users/2")
+                    .then()
+                    .statusCode(200)
+                    .body("data.email", is("janet.weaver@reqres.in"))
+                    .body("data.first_name", is("Janet"))
+                    .body("data.last_name", is("Weaver"));
     }
 
     @Test
