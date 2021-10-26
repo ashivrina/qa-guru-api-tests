@@ -6,6 +6,7 @@ import com.github.ashivrina.models.users.NewUser;
 import com.github.ashivrina.models.users.User;
 import com.github.ashivrina.models.users.UserData;
 import io.restassured.http.ContentType;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
@@ -15,7 +16,8 @@ import static org.hamcrest.Matchers.is;
 
 public class ReqresTests {
     @Test
-    void checkSuccessfullLogin() {
+    @DisplayName("Check successful login")
+    void checkSuccessfulLogin() {
         String expectedEmail = "eve.holt@reqres.in";
         String password = "cityslicka";
         RegistrationLoginRequest request = new RegistrationLoginRequest(expectedEmail, password);
@@ -35,6 +37,7 @@ public class ReqresTests {
     }
 
     @Test
+    @DisplayName("Check unsuccessful login")
     void checkUnsuccessfullLogin() {
         given()
                 .contentType(ContentType.JSON)
@@ -47,6 +50,7 @@ public class ReqresTests {
     }
 
     @Test
+    @DisplayName("Check successful registration")
     void checkSuccessfullRegistration() {
         String expectedEmail = "eve.holt@reqres.in";
         String password = "pistol";
@@ -71,6 +75,7 @@ public class ReqresTests {
     }
 
     @Test
+    @DisplayName("Check unsuccessful registration")
     void checkUnsuccessfullRegistration() {
         given()
                 .contentType(ContentType.JSON)
@@ -83,6 +88,7 @@ public class ReqresTests {
     }
 
     @Test
+    @DisplayName("Create a new user")
     void createNewUser() {
         String expectedName = "Buffy";
         String expectedJob = "vampire slayer";
@@ -107,6 +113,7 @@ public class ReqresTests {
     }
 
     @Test
+    @DisplayName("Get info about existing user")
     void getExistingUser() {
         String firstName = "Emma";
         String lastName = "Wong";
@@ -133,6 +140,7 @@ public class ReqresTests {
     }
 
     @Test
+    @DisplayName("Try to get info about non-existing user")
     void getNonexistingUser() {
         get("https://reqres.in/api/users/23")
                 .then()
