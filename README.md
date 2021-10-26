@@ -24,7 +24,7 @@ And this is the test launch overview - all 7 tests passed, yay 😺
 
 ## Jenkins job
 
-Jenkins is a tool which lets you run the tests from. 
+Jenkins is a tool from where you can run the tests. 
 Click <a target="_blank" href="https://jenkins.autotests.cloud/job/07-oecowgirl-reqresrest">here</a> to do that.
 
 <img width="1068" alt="Jenkins" src="https://user-images.githubusercontent.com/32490159/138930976-c4778720-9328-4f5c-9f19-130ec1e51a6b.png">
