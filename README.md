@@ -14,7 +14,7 @@ These are the tests which check these handlers' functionality.
 
 Click <a target="_blank" href="https://allure.autotests.cloud/project/644/dashboards">here</a> to see a list of automated test cases.
 
-Here are the test cases:
+Here are the test cases: <br />
 <img width="749" alt="Allure-Test-cases" src="https://user-images.githubusercontent.com/32490159/138930923-a891798c-cfec-4783-aaa7-d718b49d43b6.png">
 
 And this is the test launch overview - all 7 tests passed, yay 😺
