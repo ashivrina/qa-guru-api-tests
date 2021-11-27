@@ -14,17 +14,20 @@ These are the tests which check these handlers' functionality.
 
 Click <a target="_blank" href="https://allure.autotests.cloud/project/644/dashboards">here</a> to see a list of automated test cases.
 
-Here are the test cases:
-
+Here are the test cases: <br />
+<img width="749" alt="Allure-Test-cases" src="https://user-images.githubusercontent.com/32490159/138930923-a891798c-cfec-4783-aaa7-d718b49d43b6.png">
 
 And this is the test launch overview - all 7 tests passed, yay 😺
+<img width="752" alt="Allure-launch-overview" src="https://user-images.githubusercontent.com/32490159/138930942-879bd942-fe42-4e79-9c72-9444d46c8ea9.png">
 
 # Run tests 
 
 ## Jenkins job
 
-Jenkins is a tool which lets you run the tests from. 
+Jenkins is a tool from where you can run the tests. 
 Click <a target="_blank" href="https://jenkins.autotests.cloud/job/07-oecowgirl-reqresrest">here</a> to do that.
+
+<img width="1068" alt="Jenkins" src="https://user-images.githubusercontent.com/32490159/138930976-c4778720-9328-4f5c-9f19-130ec1e51a6b.png">
 
 ## Run locally
 
@@ -36,3 +39,4 @@ gradle clean test
 # Telegram notifications
 
 Notifications about test results are sent to Telegram:
+![Telegram](https://user-images.githubusercontent.com/32490159/138931001-719b82a9-c53e-41bb-959c-ebf026af29e1.jpg)
